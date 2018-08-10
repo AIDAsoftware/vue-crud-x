@@ -1,6 +1,7 @@
 ### Version 0.0.4
 * Add translation to "vueCrudX.confirm" and "vueCrudX.noData"
 * Show linear progress only when is loading
+* Close form when action is finished
 
 ### Version 0.0.3
 
