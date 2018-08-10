@@ -308,7 +308,7 @@ export default {
       <template slot="items" slot-scope="props">
         <!-- tr @click.stop="(e) => addEditDialogOpen(e, props.item.id, $event)" AVOID ARROW fuctions -->
         <tr v-if="!inline" @click.stop="addEditDialogOpen(props.item.id)">
-          <td :key="header.value" v-for="header in headers">{{ props.item[header.value] | formatters(header.value) }}</td>
+          <td class="pointer" :key="header.value" v-for="header in headers">{{ props.item[header.value] | formatters(header.value) }}</td>
         </tr>
         <tr v-else>
           <!-- for now, lighten (grey lighten-4) editable columns until fixed header is implemented -->
@@ -391,4 +391,8 @@ export default {
   min-height: 100%;
   background-color: #fff;
 }
+.pointer { 
+    cursor: pointer;
+    text-align: left;
+} 
 </style>
