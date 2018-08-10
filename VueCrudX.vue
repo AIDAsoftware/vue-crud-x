@@ -289,7 +289,7 @@ export default {
   <v-container v-bind:class="{ 'make-modal': parentId }">
     <v-expansion-panel :disabled="hasFilterForm">
       <v-expansion-panel-content class="grey lighten-1">
-        <div slot="header" ><v-icon>search</v-icon> {{showTitle | capitalize}} {{ doPage ? '' : ` - ${records.length} Records` }}</div>
+        <div slot="header" > {{showTitle | capitalize}} {{ doPage ? '' : ` - ${records.length} Records` }}</div>
         <v-form class="grey lighten-3 pa-2" v-model="validFilter" ref="searchForm" lazy-validation>
           <crud-filter :filterData="filterData" :parentId="parentId" :storeName="storeName" />
           <v-layout row justify-end>
