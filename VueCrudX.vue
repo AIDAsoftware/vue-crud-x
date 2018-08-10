@@ -355,7 +355,7 @@ export default {
             <crud-form :record="record" :parentId="parentId" :storeName="storeName" />
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn fab v-if="record.id && crudOps.delete" dark @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
+              <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
               <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="addEditDialogSave"><v-icon>done</v-icon></v-btn> 
             </v-card-actions>
           </v-form>
@@ -364,9 +364,9 @@ export default {
     </v-layout>
 
     <v-layout row justify-end>
-      <v-btn v-if="parentId" fab top dark @click.stop="goBack" :disabled="loading"><v-icon>reply</v-icon></v-btn>
-      <v-btn v-if="crudOps.create" fab top dark @click.stop="inline?inlineCreate():addEditDialogOpen(null)" :disabled="loading"><v-icon>add</v-icon></v-btn>
-      <v-btn v-if="crudOps.export" fab top dark @click.stop="exportBtnClick" :disabled="loading"><!-- handle disabled FAB in Vuetify -->
+      <v-btn v-if="parentId" fab top @click.stop="goBack" :disabled="loading"><v-icon>reply</v-icon></v-btn>
+      <v-btn v-if="crudOps.create" fab top @click.stop="inline?inlineCreate():addEditDialogOpen(null)" :disabled="loading"><v-icon>add</v-icon></v-btn>
+      <v-btn v-if="crudOps.export" fab top @click.stop="exportBtnClick" :disabled="loading"><!-- handle disabled FAB in Vuetify -->
         <v-icon :class='[{"white--text": !loading }]'>print</v-icon>
       </v-btn>
     </v-layout>
