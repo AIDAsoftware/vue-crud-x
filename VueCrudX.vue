@@ -351,7 +351,7 @@ export default {
             <!-- v-btn icon @click.native="closeAddEditDialog" dark><v-icon>close</v-icon></v-btn -->
           </v-toolbar>
           <v-progress-linear :indeterminate="loading" height="2"></v-progress-linear>
-          <v-form class="grey lighten-3 pa-2" v-model="validForm" lazy-validation>
+          <v-form class="pa-2" v-model="validForm" lazy-validation>
             <crud-form :record="record" :parentId="parentId" :storeName="storeName" />
             <v-card-actions>
               <v-spacer></v-spacer>
