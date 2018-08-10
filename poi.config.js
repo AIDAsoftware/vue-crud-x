@@ -1,9 +1,7 @@
 // poi.config.js
 module.exports = {
-  entry: [
-    './CrudForm.vue',
-    './VueCrudX.vue'
-  ],
+  entry: 
+    './index.js',
   filename: {
     js: 'AidaVueCrudX.js'
     // css: 'vue-crud-x.css'

@@ -27,7 +27,7 @@
     "graphql"
   ],
   "license": "MIT",
-  "main": "dist/VueCrudX.js",
+  "main": "dist/AidaVueCrudX.js",
   "name": "aida-vue-crud-x",
   "repository": {
     "type": "git",
