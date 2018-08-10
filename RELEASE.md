@@ -1,3 +1,7 @@
+### Version 0.0.4
+* Add translation to "vueCrudX.confirm" and "vueCrudX.noData"
+* Show linear progress only when is loading
+
 ### Version 0.0.3
 
 * Change navigation button from bottom right to top left
