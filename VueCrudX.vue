@@ -345,7 +345,7 @@ export default {
       <v-dialog v-model="addEditDialogFlag" fullscreen transition="dialog-bottom-transition" :overlay="false">
         <v-card>
           <v-toolbar dark color="primary">
-            <v-toolbar-title><v-icon>mode_edit</v-icon> {{showTitle | capitalize}}</v-toolbar-title>
+            <v-toolbar-title><v-btn fab flat @click.native="closeAddEditDialog"><v-icon>arrow_back</v-icon></v-btn> {{showTitle | capitalize}}</v-toolbar-title> 
             <v-spacer></v-spacer>
             <v-toolbar-items></v-toolbar-items>
             <!-- v-btn icon @click.native="closeAddEditDialog" dark><v-icon>close</v-icon></v-btn -->
@@ -355,7 +355,6 @@ export default {
             <crud-form :record="record" :parentId="parentId" :storeName="storeName" />
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn fab @click.native="closeAddEditDialog" dark><v-icon>reply</v-icon></v-btn>
               <v-btn fab v-if="record.id && crudOps.delete" dark @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
               <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="addEditDialogSave"><v-icon>done</v-icon></v-btn> 
             </v-card-actions>
