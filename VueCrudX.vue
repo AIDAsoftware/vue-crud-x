@@ -288,8 +288,8 @@ export default {
 <template>
   <v-container v-bind:class="{ 'make-modal': parentId }">
     <v-expansion-panel :disabled="hasFilterForm">
-      <v-expansion-panel-content class="grey lighten-1">
-        <div slot="header" > {{showTitle | capitalize}} {{ doPage ? '' : ` - ${records.length} Records` }}</div>
+      <v-expansion-panel-content class="primary">
+        <div slot="header" ><span class="expandTitle">{{showTitle | capitalize}} {{ doPage ? '' : ` - ${records.length} Records` }}</span></div>
         <v-form class="grey lighten-3 pa-2" v-model="validFilter" ref="searchForm" lazy-validation>
           <crud-filter :filterData="filterData" :parentId="parentId" :storeName="storeName" />
           <v-layout row justify-end>
@@ -396,5 +396,8 @@ export default {
 .pointer { 
     cursor: pointer;
     text-align: left;
-} 
+}
+.expandTitle { 
+    color: white; 
+}
 </style>
