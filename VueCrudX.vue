@@ -281,7 +281,7 @@ export default {
       await this.deleteRecord({id})
       this.$nextTick(async function () { await this.getRecordsHelper() })
     },
-    getConfirmText () { return this.$t ? this.$t('vueCrudX.confirm') : 'PROCEED?' }
+    getConfirmText () { return this.$t ? this.$t('vueCrudX.confirm') : this.$translate('vueCrudX.confirm') }
   }
 }
 </script>
@@ -340,7 +340,7 @@ export default {
       </template>
       <template slot="no-data">
         <v-flex class="text-xs-center">
-          <v-icon>warning</v-icon> {{$t?$t('vueCrudX.noData'):'NO DATA'}} 
+          <v-icon>warning</v-icon> {{$t?$t('vueCrudX.noData'): this.$translate('vueCrudX.noData')}} 
         </v-flex>
       </template>
     </v-data-table>
