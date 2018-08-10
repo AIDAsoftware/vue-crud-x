@@ -1,4 +1,4 @@
-### Version 0.0.2
+### Version 0.0.3
 
 * Change navigation button from bottom right to top left
 * Change accept button icon
