@@ -354,7 +354,7 @@ export default {
             <v-toolbar-items></v-toolbar-items>
             <!-- v-btn icon @click.native="closeAddEditDialog" dark><v-icon>close</v-icon></v-btn -->
           </v-toolbar>
-          <v-progress-linear :indeterminate="loading" height="2"></v-progress-linear>
+          <v-progress-linear :v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
           <v-form class="pa-2" v-model="validForm" lazy-validation>
             <crud-form :record="record" :parentId="parentId" :storeName="storeName" />
             <v-card-actions>
