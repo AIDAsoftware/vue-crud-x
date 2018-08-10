@@ -102,7 +102,7 @@ export default {
     } else { // re-use the already existing module
     }
     this.$options.filters.formatters = this.crudTable.formatters // create the formatters programatically
-    this.headers = this.crudTable.headers || { }
+    this.headers = this.crudTable.headers.map(header => Object.assign({}, header, {text: this.$translate(header.text)})) 
     this.inline = this.crudTable.inline || false
     this.confirmCreate = this.crudTable.confirmCreate || false
     this.confirmUpdate = this.crudTable.confirmUpdate || false
@@ -136,7 +136,7 @@ export default {
     }
   },
   computed: {
-    showTitle () { return this.crudTitle || this.storeName },
+    showTitle () { return this.$translate(this.crudTitle || this.storeName) }, 
     // ...mapGetters(storeModuleName, [ 'records', 'totalRecs', 'filterData', 'record' ]), // cannot use for multiple stores, try below
     records () { return this.$store.getters[this.storeName + '/records'] },
     totalRecs () { return this.$store.getters[this.storeName + '/totalRecs'] },
