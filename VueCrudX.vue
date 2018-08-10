@@ -156,6 +156,9 @@ export default {
       set: function (value) {
         this.setPagination(value)
       }
+    },
+    hasFilterForm () {
+      return !this.crudFilter.FilterVue()
     }
   },
   filters: {
@@ -284,7 +287,7 @@ export default {
 
 <template>
   <v-container v-bind:class="{ 'make-modal': parentId }">
-    <v-expansion-panel>
+    <v-expansion-panel :disabled="hasFilterForm">
       <v-expansion-panel-content class="grey lighten-1">
         <div slot="header" ><v-icon>search</v-icon> {{showTitle | capitalize}} {{ doPage ? '' : ` - ${records.length} Records` }}</div>
         <v-form class="grey lighten-3 pa-2" v-model="validFilter" ref="searchForm" lazy-validation>
