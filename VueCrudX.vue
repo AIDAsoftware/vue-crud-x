@@ -79,6 +79,7 @@ const CrudStore = {
   }
 }
 export default {
+  name: 'VueCrudX',
   props: {
     parentId: { type: String, default: null },
     storeName: { type: String, required: true },

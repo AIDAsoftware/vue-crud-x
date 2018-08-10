@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'crud-form'
+  name: 'CrudForm'
 }
 </script>
 <style scoped>
