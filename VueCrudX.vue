@@ -336,7 +336,7 @@ export default {
       </template>
       <template slot="no-data">
         <v-flex class="text-xs-center">
-          <v-alert :value="true" color="error" icon=""><v-icon>warning</v-icon> {{$t?$t('vueCrudX.noData'):'NO DATA'}}</v-alert>
+          <v-icon>warning</v-icon> {{$t?$t('vueCrudX.noData'):'NO DATA'}} 
         </v-flex>
       </template>
     </v-data-table>
