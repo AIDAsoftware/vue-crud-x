@@ -188,18 +188,21 @@ export default {
       let res = await this.$store.dispatch(this.storeName + '/deleteRecord', payload)
       if (res) this.setSnackBar(res)
       this.loading = false
+      return res
     },
     async updateRecord (payload) {
       this.loading = true
       let res = await this.$store.dispatch(this.storeName + '/updateRecord', payload)
       if (res) this.setSnackBar(res)
       this.loading = false
+      return res
     },
     async createRecord (payload) {
       this.loading = true
       let res = await this.$store.dispatch(this.storeName + '/createRecord', payload)
       if (res) this.setSnackBar(res)
       this.loading = false
+      return res
     },
     async getRecord (payload) {
       this.loading = true
@@ -220,10 +223,13 @@ export default {
       if (this.record.id && this.confirmCreate) if (!confirm(this.getConfirmText())) return
       if (!this.record.id && this.confirmUpdate) if (!confirm(this.getConfirmText())) return
 
-      if (this.record.id) await this.updateRecord({record: this.record})
-      else await this.createRecord({record: this.record, parentId: this.parentId})
-      await this.getRecordsHelper()
-      this.closeAddEditDialog()
+      let closeDialog = true 
+      if (this.record.id) closeDialog = await this.updateRecord({record: this.record})
+      else closeDialog  = await this.createRecord({record: this.record, parentId: this.parentId})
+      if (closeDialog) { 
+        await this.getRecordsHelper()
+        this.closeAddEditDialog()
+      }
     },
     async addEditDialogDelete (e) {
       if (this.confirmDelete) if (!confirm(this.getConfirmText())) return
