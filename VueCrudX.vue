@@ -75,6 +75,9 @@ const CrudStore = {
       payload.user = this.getters.user
       let res = await getters.crudOps.create(payload)
       return res
+    },
+    resetRecord ({ commit }) {
+      commit('setRecord', null)
     }
   }
 }
@@ -213,8 +216,10 @@ export default {
       this.loading = false
     },
     setRecord (payload) { this.$store.commit(this.storeName + '/setRecord', null) },
+    resetRecord () { this.$store.dispatch(this.storeName + '/resetRecord') },
     async exportRecords (payload) { await this.$store.dispatch(this.storeName + '/exportRecords', payload) },
     closeAddEditDialog () {
+      this.resetRecord()
       this.addEditDialogFlag = false
     },
     async addEditDialogOpen (id) {

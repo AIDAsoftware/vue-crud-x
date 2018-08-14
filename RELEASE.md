@@ -1,3 +1,7 @@
+### Version 0.0.5
+
+* Reset record when add/edit dialog is closed
+
 ### Version 0.0.4
 * Add translation to "vueCrudX.confirm" and "vueCrudX.noData"
 * Show linear progress only when is loading
