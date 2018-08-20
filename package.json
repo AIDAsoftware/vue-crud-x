@@ -37,7 +37,7 @@
     "build": "poi build",
     "clean": "rm package-lock.json && rm node_modules"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publishConfig": {
     "registry": "https://www.myget.org/F/aidacanarias/npm/"
   }

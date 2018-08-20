@@ -1,5 +1,7 @@
-### Version 0.0.5
+### Version 0.0.6
+* Merge with upstream (v. 0.0.19)
 
+### Version 0.0.5
 * Reset record when add/edit dialog is closed
 
 ### Version 0.0.4
