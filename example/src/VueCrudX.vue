@@ -75,10 +75,14 @@ const CrudStore = {
       payload.user = this.getters.user
       let res = await getters.crudOps.create(payload)
       return res
+    },
+    resetRecord ({ commit }) {
+      commit('setRecord', null)
     }
   }
 }
 export default {
+  name: 'VueCrudX',
   props: {
     parentId: { type: String, default: null },
     storeName: { type: String, required: true },
@@ -102,7 +106,7 @@ export default {
     } else { // re-use the already existing module
     }
     this.$options.filters.formatters = this.crudTable.formatters // create the formatters programatically
-    this.headers = this.crudTable.headers || { }
+    this.headers = this.crudTable.headers.map(header => Object.assign({}, header, {text: this.$translate(header.text)})) 
     this.inline = this.crudTable.inline || false
     this.confirmCreate = this.crudTable.confirmCreate || false
     this.confirmUpdate = this.crudTable.confirmUpdate || false
@@ -136,7 +140,7 @@ export default {
     }
   },
   computed: {
-    showTitle () { return this.crudTitle || this.storeName },
+    showTitle () { return this.$translate(this.crudTitle || this.storeName) }, 
     // ...mapGetters(storeModuleName, [ 'records', 'totalRecs', 'filterData', 'record' ]), // cannot use for multiple stores, try below
     records () { return this.$store.getters[this.storeName + '/records'] },
     totalRecs () { return this.$store.getters[this.storeName + '/totalRecs'] },
@@ -156,6 +160,9 @@ export default {
       set: function (value) {
         this.setPagination(value)
       }
+    },
+    hasFilterForm () {
+      return !this.crudFilter.FilterVue()
     }
   },
   filters: {
@@ -188,7 +195,6 @@ export default {
       let res = await this.$store.dispatch(this.storeName + '/deleteRecord', payload)
       if (res) this.setSnackBar(res)
       this.loading = false
-      return res
     },
     async updateRecord (payload) {
       this.loading = true
@@ -210,8 +216,10 @@ export default {
       this.loading = false
     },
     setRecord (payload) { this.$store.commit(this.storeName + '/setRecord', null) },
+    resetRecord () { this.$store.dispatch(this.storeName + '/resetRecord') },
     async exportRecords (payload) { await this.$store.dispatch(this.storeName + '/exportRecords', payload) },
     closeAddEditDialog () {
+      this.resetRecord()
       this.addEditDialogFlag = false
     },
     async addEditDialogOpen (id) {
@@ -225,7 +233,7 @@ export default {
 
       let closeDialog = true 
       if (this.record.id) closeDialog = await this.updateRecord({record: this.record})
-      else closeDialog  = await this.createRecord({record: this.record, parentId: this.parentId})
+      else closeDialog = await this.createRecord({record: this.record, parentId: this.parentId})
       if (closeDialog) { 
         await this.getRecordsHelper()
         this.closeAddEditDialog()
@@ -283,16 +291,16 @@ export default {
       await this.deleteRecord({id})
       this.$nextTick(async function () { await this.getRecordsHelper() })
     },
-    getConfirmText () { return this.$t ? this.$t('vueCrudX.confirm') : 'PROCEED?' }
+    getConfirmText () { return this.$t ? this.$t('vueCrudX.confirm') : this.$translate('vueCrudX.confirm') }
   }
 }
 </script>
 
 <template>
   <v-container v-bind:class="{ 'make-modal': parentId }">
-    <v-expansion-panel>
-      <v-expansion-panel-content class="grey lighten-1">
-        <div slot="header" ><v-icon>search</v-icon> {{showTitle | capitalize}} {{ doPage ? '' : ` - ${records.length} Records` }}</div>
+    <v-expansion-panel :disabled="hasFilterForm">
+      <v-expansion-panel-content class="primary">
+        <div slot="header" ><span class="expandTitle">{{showTitle | capitalize}}</span></div>
         <v-form class="grey lighten-3 pa-2" v-model="validFilter" ref="searchForm" lazy-validation>
           <crud-filter :filterData="filterData" :parentId="parentId" :storeName="storeName" />
           <v-layout row justify-end>
@@ -314,7 +322,7 @@ export default {
       <template slot="items" slot-scope="props">
         <!-- tr @click.stop="(e) => addEditDialogOpen(e, props.item.id, $event)" AVOID ARROW fuctions -->
         <tr v-if="!inline" @click.stop="addEditDialogOpen(props.item.id)">
-          <td :key="header.value" v-for="header in headers">{{ props.item[header.value] | formatters(header.value) }}</td>
+          <td class="pointer" :key="header.value" v-for="header in headers">{{ props.item[header.value] | formatters(header.value) }}</td>
         </tr>
         <tr v-else>
           <!-- for now, lighten (grey lighten-4) editable columns until fixed header is implemented -->
@@ -342,7 +350,7 @@ export default {
       </template>
       <template slot="no-data">
         <v-flex class="text-xs-center">
-          <v-alert :value="true" color="error" icon=""><v-icon>warning</v-icon> {{$t?$t('vueCrudX.noData'):'NO DATA'}}</v-alert>
+          <v-icon>warning</v-icon> {{$t?$t('vueCrudX.noData'): this.$translate('vueCrudX.noData')}} 
         </v-flex>
       </template>
     </v-data-table>
@@ -351,19 +359,18 @@ export default {
       <v-dialog v-model="addEditDialogFlag" fullscreen transition="dialog-bottom-transition" :overlay="false">
         <v-card>
           <v-toolbar dark color="primary">
-            <v-toolbar-title><v-icon>mode_edit</v-icon> {{showTitle | capitalize}}</v-toolbar-title>
+            <v-toolbar-title><v-btn fab flat @click.native="closeAddEditDialog"><v-icon>arrow_back</v-icon></v-btn> {{showTitle | capitalize}}</v-toolbar-title> 
             <v-spacer></v-spacer>
             <v-toolbar-items></v-toolbar-items>
             <!-- v-btn icon @click.native="closeAddEditDialog" dark><v-icon>close</v-icon></v-btn -->
           </v-toolbar>
-          <v-progress-linear :indeterminate="loading" height="2"></v-progress-linear>
-          <v-form class="grey lighten-3 pa-2" v-model="validForm" lazy-validation>
+          <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
+          <v-form class="pa-2" v-model="validForm" lazy-validation>
             <crud-form :record="record" :parentId="parentId" :storeName="storeName" />
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn fab @click.native="closeAddEditDialog" dark><v-icon>reply</v-icon></v-btn>
-              <v-btn fab v-if="record.id && crudOps.delete" dark @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
-              <v-btn fab v-if="(record.id && crudOps.update) || (!record.id && crudOps.create)" :disabled="!validForm" @click.native="addEditDialogSave"><v-icon>done_all</v-icon></v-btn>
+              <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
+              <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="addEditDialogSave"><v-icon>done</v-icon></v-btn> 
             </v-card-actions>
           </v-form>
         </v-card>
@@ -371,9 +378,9 @@ export default {
     </v-layout>
 
     <v-layout row justify-end>
-      <v-btn v-if="parentId" fab top dark @click.stop="goBack" :disabled="loading"><v-icon>reply</v-icon></v-btn>
-      <v-btn v-if="crudOps.create" fab top dark @click.stop="inline?inlineCreate():addEditDialogOpen(null)" :disabled="loading"><v-icon>add</v-icon></v-btn>
-      <v-btn v-if="crudOps.export" fab top dark @click.stop="exportBtnClick" :disabled="loading"><!-- handle disabled FAB in Vuetify -->
+      <v-btn v-if="parentId" fab top @click.stop="goBack" :disabled="loading"><v-icon>reply</v-icon></v-btn>
+      <v-btn v-if="crudOps.create" fab top @click.stop="inline?inlineCreate():addEditDialogOpen(null)" :disabled="loading"><v-icon>add</v-icon></v-btn>
+      <v-btn v-if="crudOps.export" fab top @click.stop="exportBtnClick" :disabled="loading"><!-- handle disabled FAB in Vuetify -->
         <v-icon :class='[{"white--text": !loading }]'>print</v-icon>
       </v-btn>
     </v-layout>
@@ -396,5 +403,12 @@ export default {
   min-width: 100%;
   min-height: 100%;
   background-color: #fff;
+}
+.pointer { 
+    cursor: pointer;
+    text-align: left;
+}
+.expandTitle { 
+    color: white; 
 }
 </style>
