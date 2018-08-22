@@ -92,7 +92,8 @@ export default {
     crudOps: { type: Object, required: true },
     crudTitle: { type: String },
     doPage: { type: Boolean, default: true },
-    crudSnackBar: { type: Object, default: () => ({ bottom: true, timeout: 6000 }) }
+    crudSnackBar: { type: Object, default: () => ({ bottom: true, timeout: 6000 }) },
+    fixed: { type: Boolean, default: false }
   },
   created () {
     const store = this.$store
@@ -363,7 +364,7 @@ export default {
     <v-layout row justify-center>
       <v-dialog v-model="addEditDialogFlag" fullscreen transition="dialog-bottom-transition" :overlay="false">
         <v-card>
-          <v-toolbar dark color="primary">
+          <v-toolbar dark color="primary" :fixed="fixed">
             <v-toolbar-title><v-btn fab flat @click.native="closeAddEditDialog"><v-icon>arrow_back</v-icon></v-btn> {{showTitle | capitalize}}</v-toolbar-title> 
             <v-spacer></v-spacer>
             <v-toolbar-items></v-toolbar-items>

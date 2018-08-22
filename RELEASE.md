@@ -1,3 +1,6 @@
+### Version 0.0.7
+* Add optional fixed prop to toolbar
+
 ### Version 0.0.6
 * Merge with upstream (v. 0.0.19)
 
