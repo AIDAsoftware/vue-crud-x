@@ -1,3 +1,6 @@
+### Version 0.0.8
+* Fix style fixed
+
 ### Version 0.0.7
 * Add optional fixed prop to toolbar
 

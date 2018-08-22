@@ -371,7 +371,7 @@ export default {
           </v-toolbar>
           <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
           <v-form class="pa-2" v-model="validForm" lazy-validation>
-            <crud-form :record="record" :parentId="parentId" :storeName="storeName" />
+            <crud-form :record="record" :parentId="parentId" :storeName="storeName" :style="{ 'padding-top': fixed ? '94px' : '24px'}" />
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>

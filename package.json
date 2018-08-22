@@ -1,4 +1,4 @@
-{  
+{
   "author": {
     "name": "Aplicaciones Informáticas Domingo Alonso",
     "email": "info@aidacanarias.com"
@@ -37,7 +37,7 @@
     "build": "poi build",
     "clean": "rm package-lock.json && rm node_modules"
   },
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publishConfig": {
     "registry": "https://www.myget.org/F/aidacanarias/npm/"
   }
