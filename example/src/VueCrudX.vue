@@ -297,7 +297,14 @@ export default {
       await this.deleteRecord({id})
       this.$nextTick(async function () { await this.getRecordsHelper() })
     },
-    getConfirmText () { return this.$t ? this.$t('vueCrudX.confirm') : this.$translate('vueCrudX.confirm') }
+    getConfirmText () { 
+      return this.$t ? this.$t('vueCrudX.confirm') : this.$translate('vueCrudX.confirm')
+    },
+    submitForm () {
+      if (this.$refs['submitForm'].validate()) { 
+        this.addEditDialogSave()
+      }
+    }
   }
 }
 </script>
@@ -370,12 +377,12 @@ export default {
             <v-toolbar-items></v-toolbar-items>
           </v-toolbar>
           <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
-          <v-form class="pa-2" v-model="validForm" lazy-validation>
+          <v-form ref="submitForm" class="pa-2" v-model="validForm" lazy-validation>
             <crud-form :record="record" :parentId="parentId" :storeName="storeName" :style="{ 'padding-top': fixed ? '94px' : '24px'}" />
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
-              <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="addEditDialogSave"><v-icon>done</v-icon></v-btn> 
+              <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="submitForm"><v-icon>done</v-icon></v-btn> 
             </v-card-actions>
           </v-form>
         </v-card>
