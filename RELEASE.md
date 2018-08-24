@@ -1,3 +1,7 @@
+### Version 0.0.9
+* Fix confirm translated text
+* Set lazy validation to form
+
 ### Version 0.0.8
 * Fix style fixed
 

@@ -3,6 +3,7 @@
     "name": "Aplicaciones Informáticas Domingo Alonso",
     "email": "info@aidacanarias.com"
   },
+  "version": "0.0.9",
   "bugs": {
     "url": "https://github.com/AIDAsoftware/vue-crud-x/issues"
   },
@@ -37,7 +38,6 @@
     "build": "poi build",
     "clean": "rm package-lock.json && rm node_modules"
   },
-  "version": "0.0.8",
   "publishConfig": {
     "registry": "https://www.myget.org/F/aidacanarias/npm/"
   }
