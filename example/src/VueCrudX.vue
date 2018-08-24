@@ -233,8 +233,8 @@ export default {
       this.addEditDialogFlag = true
     },
     async addEditDialogSave (e) {
-      if (this.record.id && this.confirmCreate) if (!confirm(this.$t('vueCrudX.confirm'))) return
-      if (!this.record.id && this.confirmUpdate) if (!confirm(this.$t('vueCrudX.confirm'))) return
+      if (this.record.id && this.confirmCreate) if (!confirm(this.getConfirmText())) return
+      if (!this.record.id && this.confirmUpdate) if (!confirm(this.getConfirmText())) return
 
       let closeDialog = true 
       if (this.record.id) closeDialog = await this.updateRecord({record: this.record})
@@ -245,7 +245,7 @@ export default {
       }
     },
     async addEditDialogDelete (e) {
-      if (this.confirmDelete) if (!confirm(this.$t('vueCrudX.confirm'))) return
+      if (this.confirmDelete) if (!confirm(this.getConfirmText())) return
       const {id} = this.record
       if (id) {
         await this.deleteRecord({id})
@@ -288,12 +288,12 @@ export default {
       if (!rv) item[field] = this.inlineValue // if false undo changes
     },
     async inlineCreate () {
-      if (this.confirmCreate) if (!confirm(this.$t('vueCrudX.confirm'))) return
+      if (this.confirmCreate) if (!confirm(this.getConfirmText())) return
       await this.createRecord({record: (typeof this.crudForm.defaultRec === 'function') ? this.crudForm.defaultRec() : this.crudForm.defaultRec, parentId: this.parentId})
       this.$nextTick(async function () { await this.getRecordsHelper() })
     },
     async inlineDelete (id) {
-      if (this.confirmDelete) if (!confirm(this.$t('vueCrudX.confirm'))) return
+      if (this.confirmDelete) if (!confirm(this.getConfirmText())) return
       await this.deleteRecord({id})
       this.$nextTick(async function () { await this.getRecordsHelper() })
     },
