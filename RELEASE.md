@@ -1,3 +1,6 @@
+### Version 0.0.10
+* Reset validation in form when arrow back is clicked
+
 ### Version 0.0.9
 * Fix confirm translated text
 * Set lazy validation to form

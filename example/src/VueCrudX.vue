@@ -225,6 +225,7 @@ export default {
     async exportRecords (payload) { await this.$store.dispatch(this.storeName + '/exportRecords', payload) },
     closeAddEditDialog () {
       this.resetRecord()
+      this.resetForm()
       this.addEditDialogFlag = false
     },
     async addEditDialogOpen (id) {
@@ -304,6 +305,9 @@ export default {
       if (this.$refs['submitForm'].validate()) { 
         this.addEditDialogSave()
       }
+    },
+    resetForm () {
+      this.$refs['submitForm'].reset()
     }
   }
 }
