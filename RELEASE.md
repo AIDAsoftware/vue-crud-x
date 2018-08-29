@@ -1,3 +1,6 @@
+### Version 0.0.12
+* Translate Crud Form Title
+
 ### Version 0.0.11
 * Add link to back Crud and remove toolbar
 
