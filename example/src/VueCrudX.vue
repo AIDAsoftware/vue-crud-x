@@ -375,20 +375,22 @@ export default {
     <v-layout row justify-center>
       <v-dialog v-model="addEditDialogFlag" fullscreen transition="dialog-bottom-transition" :overlay="false">
         <v-card>
-          <v-toolbar dark color="primary" :fixed="fixed">
-            <v-toolbar-title><v-btn fab flat @click.native="closeAddEditDialog"><v-icon>arrow_back</v-icon></v-btn> {{showTitle | capitalize}}</v-toolbar-title> 
-            <v-spacer></v-spacer>
-            <v-toolbar-items></v-toolbar-items>
-          </v-toolbar>
-          <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
-          <v-form ref="submitForm" class="pa-2" v-model="validForm" lazy-validation>
-            <crud-form :record="record" :parentId="parentId" :storeName="storeName" :style="{ 'padding-top': fixed ? '94px' : '24px'}" />
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
-              <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="submitForm"><v-icon>done</v-icon></v-btn> 
-            </v-card-actions>
-          </v-form>
+          <div class="with-padding-top">
+            <div class="backToolbarContainer">
+              <div class="backToolbarContent pl-3">
+                <v-icon @click="closeAddEditDialog()" color="secondary-variant">arrow_back</v-icon><span class="on-background--text">{{ crudTitle }}</span>
+              </div>
+            </div>
+            <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
+            <v-form ref="submitForm" class="pa-2" v-model="validForm" lazy-validation>
+              <crud-form :record="record" :parentId="parentId" :storeName="storeName"/>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
+                <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="submitForm"><v-icon>done</v-icon></v-btn> 
+              </v-card-actions>
+            </v-form>
+          </div>
         </v-card>
       </v-dialog>
     </v-layout>
@@ -427,4 +429,20 @@ export default {
 .expandTitle { 
     color: white; 
 }
+.backToolbarContent {
+    max-width: 60%;
+    width: 60%;
+    text-align: left;
+}
+.backToolbarContainer {
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+}
+.backToolbarContent span {
+  margin-left: 10px;
+}
+.with-padding-top {
+  padding-top: 125px;
+}  
 </style>
