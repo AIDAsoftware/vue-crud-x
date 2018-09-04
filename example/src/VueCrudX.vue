@@ -378,7 +378,7 @@ export default {
           <div class="with-padding-top">
             <div class="backToolbarContainer">
               <div class="backToolbarContent pl-3">
-                <v-icon @click="closeAddEditDialog()" color="secondary-variant">arrow_back</v-icon><span class="on-background--text">{{ this.$translate(crudTitle) }}</span>
+                <v-icon @click="closeAddEditDialog()" color="secondaryVariant">arrow_back</v-icon><span class="onBackground--text">{{ this.$translate(crudTitle) }}</span>
               </div>
             </div>
             <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
