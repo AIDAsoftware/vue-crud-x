@@ -94,7 +94,7 @@ export default {
     crudTitle: { type: String },
     doPage: { type: Boolean, default: true },
     crudSnackBar: { type: Object, default: () => ({ bottom: true, timeout: 6000 }) },
-    fixed: { type: Boolean, default: false }
+    fixed: { type: Boolean, default: false },
   },
   created () {
     const store = this.$store
@@ -140,6 +140,9 @@ export default {
       snackbar: false,
       snackbarText: ''
     }
+  },
+   destroyed: function () {
+    this.closeAddEditDialog()
   },
   computed: {
     showTitle () { return this.$translate(this.crudTitle || this.storeName) }, 
@@ -315,7 +318,14 @@ export default {
 </script>
 
 <template>
-  <v-container v-bind:class="{ 'make-modal': parentId }">
+  <v-container v-bind:class="{ 'make-modal': parentId }"> 
+    <v-layout row justify-end>
+      <v-btn v-if="parentId" fab top @click.stop="goBack" :disabled="loading"><v-icon>reply</v-icon></v-btn>
+      <v-btn class="new-button" v-if="crudOps.create" depressed color="secondary" @click.stop="inline?inlineCreate():addEditDialogOpen(null)" :disabled="loading">{{ this.$translate('Shared.New') }}</v-btn>
+      <v-btn v-if="crudOps.export" fab top @click.stop="exportBtnClick" :disabled="loading"><!-- handle disabled FAB in Vuetify -->
+        <v-icon :class='[{"white--text": !loading }]'>print</v-icon>
+      </v-btn>
+    </v-layout>
     <v-expansion-panel v-if="withHeader" :disabled="hasFilterForm">
       <v-expansion-panel-content class="primary">
         <div slot="header" ><span class="expandTitle">{{showTitle | capitalize}}</span></div>
@@ -378,30 +388,24 @@ export default {
         <v-card>
           <div class="with-padding-top">
             <div class="backToolbarContainer">
-              <div class="backToolbarContent pl-3">
+              <div class="backToolbarContent">
                 <v-icon @click="closeAddEditDialog()" color="secondaryVariant">arrow_back</v-icon><span class="onBackground--text">{{ this.$translate(crudTitle) }}</span>
               </div>
             </div>
             <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
-            <v-form ref="submitForm" class="pa-2" v-model="validForm" lazy-validation>
+            <v-card class="with-card">
+              <v-form ref="submitForm" class="pa-2" v-model="validForm" lazy-validation>
               <crud-form :record="record" :parentId="parentId" :storeName="storeName"/>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn fab v-if="record.id && crudOps.delete"  @click.native="addEditDialogDelete"><v-icon>delete</v-icon></v-btn>
-                <v-btn fab v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" @click.native="submitForm"><v-icon>done</v-icon></v-btn> 
-              </v-card-actions>
-            </v-form>
+                <v-card-actions class="with-space-between">
+                  <v-btn v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" color="secondary" @click.native="submitForm">{{ this.$translate("Shared.Done") }}</v-btn>
+                  <slot name="cardActions"></slot>
+                  <v-btn v-if="record.id && crudOps.delete" depressed color="surfaceHover" @click.native="addEditDialogDelete">{{ this.$translate("Shared.Delete") }}</v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card>
           </div>
         </v-card>
       </v-dialog>
-    </v-layout>
-
-    <v-layout row justify-end>
-      <v-btn v-if="parentId" fab top @click.stop="goBack" :disabled="loading"><v-icon>reply</v-icon></v-btn>
-      <v-btn v-if="crudOps.create" fab top @click.stop="inline?inlineCreate():addEditDialogOpen(null)" :disabled="loading"><v-icon>add</v-icon></v-btn>
-      <v-btn v-if="crudOps.export" fab top @click.stop="exportBtnClick" :disabled="loading"><!-- handle disabled FAB in Vuetify -->
-        <v-icon :class='[{"white--text": !loading }]'>print</v-icon>
-      </v-btn>
     </v-layout>
 
     <v-snackbar v-if="crudSnackBar" v-model="snackbar" v-bind="crudSnackBar">
@@ -412,38 +416,52 @@ export default {
 </template>
 
 <style lang="css" scoped>
-.make-modal {
-  margin: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  padding: 0;
-  min-width: 100%;
-  min-height: 100%;
-  background-color: #fff;
-}
-.pointer { 
+  .make-modal {
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #fff;
+  }
+  .pointer { 
     cursor: pointer;
     text-align: left;
-}
-.expandTitle { 
+  }
+  .expandTitle { 
     color: white; 
-}
-.backToolbarContent {
+  }
+  .backToolbarContent {
     max-width: 60%;
     width: 60%;
     text-align: left;
-}
-.backToolbarContainer {
+  }
+  .backToolbarContainer {
     display: flex;
     font-size: 16px;
     justify-content: center;
-}
-.backToolbarContent span {
-  margin-left: 10px;
-}
-.with-padding-top {
-  padding-top: 125px;
-}  
+    margin-bottom: 20px;
+  }
+  .backToolbarContent span {
+    margin-left: 10px;
+  }
+  .with-padding-top {
+    padding-top: 125px;
+  }
+  .with-card {
+    max-width: 60%;
+    margin: auto;
+  }
+  .with-space-between {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-left: 24px;
+  }
+  .new-button {
+    margin-bottom: 10px;
+  }
 </style>

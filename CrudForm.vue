@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="crudForm elevation-4" >
-       <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -12,10 +10,6 @@ export default {
 }
 </script>
 <style scoped>
-  .crudForm {
-    max-width: 60%;
-    width: 60%;
-  }
   .container {
     display: flex;
     flex-flow: column;
