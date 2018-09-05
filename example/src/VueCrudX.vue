@@ -90,6 +90,7 @@ export default {
     crudTable: { type: Object, required: true },
     crudForm: { type: Object, required: true },
     crudOps: { type: Object, required: true },
+    withHeader: {type: Boolean, default: true},
     crudTitle: { type: String },
     doPage: { type: Boolean, default: true },
     crudSnackBar: { type: Object, default: () => ({ bottom: true, timeout: 6000 }) },
@@ -315,7 +316,7 @@ export default {
 
 <template>
   <v-container v-bind:class="{ 'make-modal': parentId }">
-    <v-expansion-panel :disabled="hasFilterForm">
+    <v-expansion-panel v-if="withHeader" :disabled="hasFilterForm">
       <v-expansion-panel-content class="primary">
         <div slot="header" ><span class="expandTitle">{{showTitle | capitalize}}</span></div>
         <v-form class="grey lighten-3 pa-2" v-model="validFilter" ref="searchForm" lazy-validation>
