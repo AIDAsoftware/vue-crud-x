@@ -1,3 +1,7 @@
+### Version 0.1.1
+* Remove slot
+* Add padding to the button 
+* Change destroyed fuction
 ### Version 0.1.0
 * Change buttons and insert it into card 
 * Remove card elevation from crudForm

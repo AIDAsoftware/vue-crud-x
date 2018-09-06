@@ -142,7 +142,8 @@ export default {
     }
   },
    destroyed: function () {
-    this.closeAddEditDialog()
+      this.resetRecord()
+      this.addEditDialogFlag = false
   },
   computed: {
     showTitle () { return this.$translate(this.crudTitle || this.storeName) }, 
@@ -398,7 +399,6 @@ export default {
               <crud-form :record="record" :parentId="parentId" :storeName="storeName"/>
                 <v-card-actions class="with-space-between">
                   <v-btn v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" color="secondary" @click.native="submitForm">{{ this.$translate("Shared.Done") }}</v-btn>
-                  <slot name="cardActions"></slot>
                   <v-btn v-if="record.id && crudOps.delete" depressed color="surfaceHover" @click.native="addEditDialogDelete">{{ this.$translate("Shared.Delete") }}</v-btn>
                 </v-card-actions>
               </v-form>
@@ -407,7 +407,6 @@ export default {
         </v-card>
       </v-dialog>
     </v-layout>
-
     <v-snackbar v-if="crudSnackBar" v-model="snackbar" v-bind="crudSnackBar">
       {{ snackbarText }}
       <v-btn fab flat @click="snackbar=false"><v-icon >close</v-icon></v-btn>
@@ -459,7 +458,7 @@ export default {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    padding-left: 24px;
+    padding: 0 24px 24px 24px;
   }
   .new-button {
     margin-bottom: 10px;
