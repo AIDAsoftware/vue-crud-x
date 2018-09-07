@@ -1,3 +1,7 @@
+### Version 0.1.2
+* Remove progress linear
+* emit loading
+* disable buttons when is loading
 ### Version 0.1.1
 * Remove slot
 * Add padding to the button 
