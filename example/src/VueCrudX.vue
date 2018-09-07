@@ -393,13 +393,12 @@ export default {
                 <v-icon @click="closeAddEditDialog()" color="secondaryVariant">arrow_back</v-icon><span class="onBackground--text">{{ this.$translate(crudTitle) }}</span>
               </div>
             </div>
-            <v-progress-linear v-show="loading" :indeterminate="true" height="2"></v-progress-linear>
             <v-card class="with-card">
               <v-form ref="submitForm" class="pa-2" v-model="validForm" lazy-validation>
               <crud-form :record="record" :parentId="parentId" :storeName="storeName"/>
                 <v-card-actions class="with-space-between">
-                  <v-btn v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm" color="secondary" @click.native="submitForm">{{ this.$translate("Shared.Done") }}</v-btn>
-                  <v-btn v-if="record.id && crudOps.delete" depressed color="surfaceHover" @click.native="addEditDialogDelete">{{ this.$translate("Shared.Delete") }}</v-btn>
+                  <v-btn v-if="(record.id && this.crudOps.update) || (!record.id && this.crudOps.create)" :disabled="!validForm || loading" color="secondary" @click.native="submitForm">{{ this.$translate("Shared.Done") }}</v-btn>
+                  <v-btn v-if="record.id && crudOps.delete" depressed color="surfaceHover" @click.native="addEditDialogDelete" :disabled="loading" >{{ this.$translate("Shared.Delete") }}</v-btn>
                 </v-card-actions>
               </v-form>
             </v-card>
