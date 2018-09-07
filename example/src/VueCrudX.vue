@@ -200,30 +200,30 @@ export default {
     async getRecords (payload) { await this.$store.dispatch(this.storeName + '/getRecords', payload) },
     setPagination (payload) { this.$store.dispatch(this.storeName + '/setPagination', payload) },
     async deleteRecord (payload) {
-      this.loading = true
+      this.emitLoading(true)
       let res = await this.$store.dispatch(this.storeName + '/deleteRecord', payload)
-      this.loading = false
+      this.emitLoading(false)
       this.setSnackBar(res)
       return res === 200
     },
     async updateRecord (payload) {
-      this.loading = true
+      this.emitLoading(true)
       let res = await this.$store.dispatch(this.storeName + '/updateRecord', payload)
-      this.loading = false
+      this.emitLoading(false)
       this.setSnackBar(res)
       return res
     },
     async createRecord (payload) {
-      this.loading = true
+      this.emitLoading(true)
       let res = await this.$store.dispatch(this.storeName + '/createRecord', payload)
-      this.loading = false
+      this.emitLoading(false)
       this.setSnackBar(res)
       return res
     },
     async getRecord (payload) {
-      this.loading = true
+      this.emitLoading(true)
       await this.$store.dispatch(this.storeName + '/getRecord', payload)
-      this.loading = false
+      this.emitLoading(false)
     },
     setRecord (payload) { this.$store.commit(this.storeName + '/setRecord', null) },
     resetRecord () { this.$store.dispatch(this.storeName + '/resetRecord') },
@@ -313,6 +313,10 @@ export default {
     },
     resetForm () {
       this.$refs['submitForm'].reset()
+    },
+    emitLoading (status) {
+      this.loading = status      
+      this.$emit("loading",status)
     }
   }
 }
