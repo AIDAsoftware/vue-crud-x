@@ -394,7 +394,7 @@ export default {
           <div class="with-padding-top">
             <div class="backToolbarContainer">
               <div class="backToolbarContent">
-                <v-icon @click="closeAddEditDialog()" color="secondaryVariant">arrow_back</v-icon><span class="onBackground--text">{{ this.$translate(crudTitle) }}</span>
+                <v-icon @click="closeAddEditDialog()" color="secondaryVariant" class="with-icon">arrow_back</v-icon><span class="onBackground--text">{{ this.$translate(crudTitle) }}</span>
               </div>
             </div>
             <v-card class="with-card">
@@ -466,5 +466,8 @@ export default {
   }
   .new-button {
     margin-bottom: 10px;
+  }
+  .v-icon {
+    line-height: 0.8;
   }
 </style>
