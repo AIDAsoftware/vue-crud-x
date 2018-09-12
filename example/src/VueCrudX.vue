@@ -456,6 +456,7 @@ export default {
   .with-card {
     max-width: 60%;
     margin: auto;
+    padding-top: 50px;
   }
   .with-space-between {
     display: flex;
