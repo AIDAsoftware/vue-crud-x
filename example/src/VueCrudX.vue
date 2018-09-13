@@ -469,7 +469,4 @@ export default {
   .v-icon {
     line-height: 0.8;
   }
-  .v-dialog--fullscreen {
-    transition: 0s;
-  }
 </style>
