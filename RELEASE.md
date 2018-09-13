@@ -1,21 +1,30 @@
+### Version 0.1.6
+* Change transition
+
 ### Version 0.1.5
 * Remove padding
+
 ### Version 0.1.4
 * Add css
+
 ### Version 0.1.3
 * Add padding
+
 ### Version 0.1.2
 * Remove progress linear
 * emit loading
 * disable buttons when is loading
+
 ### Version 0.1.1
 * Remove slot
 * Add padding to the button 
 * Change destroyed fuction
+
 ### Version 0.1.0
 * Change buttons and insert it into card 
 * Remove card elevation from crudForm
 * Add destroyed action
+
 ### Version 0.0.14
 * Add optional withheader prop for hide this
 

@@ -389,7 +389,7 @@ export default {
     </v-data-table>
 
     <v-layout row justify-center>
-      <v-dialog v-model="addEditDialogFlag" fullscreen transition="dialog-bottom-transition" :overlay="false">
+      <v-dialog v-model="addEditDialogFlag" fullscreen transition="slide-x-reverse-transition" :overlay="false">
         <v-card>
           <div class="with-padding-top">
             <div class="backToolbarContainer">
@@ -468,5 +468,8 @@ export default {
   }
   .v-icon {
     line-height: 0.8;
+  }
+  .v-dialog--fullscreen {
+    transition-duration: 0s;
   }
 </style>
