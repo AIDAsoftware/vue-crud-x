@@ -1,3 +1,6 @@
+### Version 0.1.7
+* Fix transition
+
 ### Version 0.1.6
 * Change transition
 
