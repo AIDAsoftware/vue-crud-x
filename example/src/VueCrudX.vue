@@ -312,6 +312,7 @@ export default {
       }
     },
     resetForm () {
+      if(!this.$refs['submitForm']) return;
       this.$refs['submitForm'].reset()
     },
     emitLoading (status) {
