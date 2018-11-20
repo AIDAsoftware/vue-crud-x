@@ -1,3 +1,6 @@
+### Version 0.1.9
+* Add npmignore
+
 ### Version 0.1.8
 * Bugfix: do not reset form if the form does not exists
 
